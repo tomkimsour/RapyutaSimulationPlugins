@@ -311,7 +311,9 @@ void URRStaticMeshComponent::CreateMeshSection(const TArray<FRRMeshNodeData>& In
             const FVertexInstanceID instanceID = OutMeshDescBuilder.AppendInstance(vertexIDs[vIdx]);
             OutMeshDescBuilder.SetInstanceNormal(instanceID, mesh.Normals[vIdx]);
             OutMeshDescBuilder.SetInstanceUV(instanceID, mesh.UVs[vIdx], 0);
-            OutMeshDescBuilder.SetInstanceColor(instanceID, FVector4(FLinearColor(mesh.VertexColors[vIdx])));
+            const auto rgbaColor = FLinearColor(mesh.VertexColors[vIdx]);
+            // OutMeshDescBuilder.SetInstanceColor(instanceID, UE::Math::TVector4<float>((float)rgbaColor.R,(float)rgbaColor.G,(float)rgbaColor.B,(float)rgbaColor.A));
+            OutMeshDescBuilder.SetInstanceColor(instanceID, UE::Math::TVector4<float>(rgbaColor));
             vertexInsts.Emplace(instanceID);
         }
 

@@ -145,7 +145,7 @@ void URR2DLidarComponent::SensorUpdate()
     {
         for (auto& h : RecordedHits)
         {
-            if (h.Actor != nullptr)
+            if (h.GetActor() != nullptr)
             {
                 float Distance = (MinRange * (h.Distance > 0) + h.Distance) * .01f;
                 if (h.PhysMaterial != nullptr)
@@ -257,7 +257,7 @@ bool URR2DLidarComponent::Visible(AActor* TargetActor)
 
     for (auto& h : RecordedVizHits)
     {
-        if (h.Actor == TargetActor)
+        if (h.GetActor() == TargetActor)
         {
             return true;
         }

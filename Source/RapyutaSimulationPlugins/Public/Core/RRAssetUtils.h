@@ -51,7 +51,7 @@ public:
 
         // Package's validity
         FString packageFileName;
-        if (false == FPackageName::DoesPackageExist(assetPackage->GetName(), nullptr, &packageFileName))
+        if (false == FPackageName::DoesPackageExist(assetPackage->GetName(), &packageFileName))
         {
             if (bIsLogged)
             {
@@ -78,10 +78,10 @@ public:
         *packageReader << packageSummary;
 
         // Package file UE version
-        const int32 packageFileVersionUE4 = packageSummary.GetFileVersionUE4();
+        const FPackageFileVersion packageFileVersionUE5 = packageSummary.GetFileVersionUE();
 
         // Check TOO OLD
-        if (packageFileVersionUE4 < VER_UE4_OLDEST_LOADABLE_PACKAGE)
+        if (packageFileVersionUE5 < VER_UE4_OLDEST_LOADABLE_PACKAGE)
         {
             if (bIsLogged)
             {
@@ -91,13 +91,14 @@ public:
                             "Min Required version: [%d] vs Package version: [%d]"),
                        *InAssetData.AssetName.ToString(),
                        static_cast<int32>(VER_UE4_OLDEST_LOADABLE_PACKAGE),
-                       packageFileVersionUE4);
+                       packageFileVersionUE5.ToValue()
+                       );
             }
             return false;
         }
 
         // Check TOO NEW
-        if (packageFileVersionUE4 > GPackageFileUE4Version)
+        if (GPackageFileUEVersion.ToValue() < packageFileVersionUE5.ToValue() )
         {
             if (bIsLogged)
             {
@@ -106,8 +107,8 @@ public:
                        TEXT("[%s] asset was saved by a newer UE version [%d], which is not forward compatible "
                             "with the current one[%d]"),
                        *InAssetData.AssetName.ToString(),
-                       packageFileVersionUE4,
-                       GPackageFileUE4Version);
+                       packageFileVersionUE5.ToValue(),
+                       GPackageFileUEVersion.ToValue());
             }
             return false;
         }

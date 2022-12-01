@@ -7,6 +7,7 @@
 #pragma once
 
 // UE
+#include "Math/UnrealMathUtility.h"
 #include "Camera/CameraComponent.h"
 #include "CoreMinimal.h"
 
@@ -15,7 +16,6 @@
 #include "Core/RRUObjectUtils.h"
 
 #include "RRCamera.generated.h"
-
 /**
  * @brief Camera user properties
  */
@@ -37,11 +37,11 @@ struct RAPYUTASIMULATIONPLUGINS_API FRRCameraProperties
     {
         UE_LOG(LogRapyutaCore, Display, TEXT("CameraProperties:"));
         UE_LOG(LogRapyutaCore, Display, TEXT("- DistanceRangeInCm: %s"), *DistanceRangeInCm.ToString());
-        verify(FMath::IsWithinInclusive(DistanceRangeInCm.X, 0.f, DistanceRangeInCm.Y));
+        verify(FMath::IsWithinInclusive(DistanceRangeInCm.X, FVector2D(0.f,0.f).X, DistanceRangeInCm.Y));
         UE_LOG(LogRapyutaCore, Display, TEXT("- HeightRangeInCm: %s"), *HeightRangeInCm.ToString());
-        verify(FMath::IsWithinInclusive(HeightRangeInCm.X, 0.f, HeightRangeInCm.Y));
+        verify(FMath::IsWithinInclusive(HeightRangeInCm.X, FVector2D(0.f,0.f).X, HeightRangeInCm.Y));
         UE_LOG(LogRapyutaCore, Display, TEXT("- HFoVRangeInDegree: %s"), *HFoVRangeInDegree.ToString());
-        verify(FMath::IsWithinInclusive(HFoVRangeInDegree.X, 0.f, HFoVRangeInDegree.Y));
+        verify(FMath::IsWithinInclusive(HFoVRangeInDegree.X,FVector2D(0.f,0.f).X, HFoVRangeInDegree.Y));
     }
 };
 
